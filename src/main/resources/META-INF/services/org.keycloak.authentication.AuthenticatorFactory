@@ -1,1 +1,3 @@
 de.treestack.auth.ManualAccountChoiceAuthenticatorFactory
+de.treestack.auth.AccountChoiceLinkConditionFactory
+de.treestack.auth.AccountChoiceCreateConditionFactory

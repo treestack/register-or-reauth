@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        profile: [ "keycloak-22" ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >
+          mvn -B verify -P${{ matrix.profile }}
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
+          -Dsonar.organization=treestack
+          -Dsonar.projectKey=treestack_domain-role-idp-mapper
+          
+          
+        
